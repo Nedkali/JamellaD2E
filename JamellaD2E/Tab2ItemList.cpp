@@ -36,7 +36,8 @@ LRESULT CALLBACK Tab2ItemListDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 	}
 	return true;
 	case WM_COMMAND:
-		if (LOWORD(wParam) == IDC_TAB2ItemList && HIWORD(wParam) == LBN_SELCHANGE) {
+		if (LOWORD(wParam) == IDC_TAB2ItemList && HIWORD(wParam) == LBN_SELCHANGE)
+		{
 			int ix = SendDlgItemMessage(hWnd, IDC_TAB2ItemList, LB_GETCURSEL, 0, 0);
 			SelItem = (Item*)SendDlgItemMessage(hWnd, IDC_TAB2ItemList, LB_GETITEMDATA, ix, 0);
 			UpdateTab2();

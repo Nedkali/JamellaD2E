@@ -13,9 +13,7 @@ LRESULT CALLBACK HelpDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			RECT ParentPos;
 			GetWindowRect(GetParent(hWnd), &ParentPos);
 			ParentPos.left = ParentPos.right;
-			SetWindowPos(hWnd, HWND_TOP,
-				ParentPos.left, ParentPos.top,
-				0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
+			SetWindowPos(hWnd, HWND_TOP, ParentPos.left, ParentPos.top, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
 		}
 		// Load Help File from Resources
 		HRSRC rcsrc = FindResource(hInstance, MAKEINTRESOURCE(lParam), "CHELP");

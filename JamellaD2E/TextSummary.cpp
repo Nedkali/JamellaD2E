@@ -48,7 +48,7 @@ void WriteTextSummary(HWND hWnd)
 	}
 
 	// common dialog box structure
-	char QueryFilename[260];
+	char QueryFilename[260]{};
 	OPENFILENAME ofn;
 
 	{ // Initialize OPENFILENAME
@@ -103,8 +103,8 @@ void WriteTextSummary(HWND hWnd)
 		fprintf(f, "Health: %u / %u\n", fc.gf.health, fc.gf.healthmax);
 		fprintf(f, "Mana: %u / %u\n", fc.gf.mana, fc.gf.manamax);
 		fprintf(f, "Stamina: %u / %u\n", fc.gf.stamina, fc.gf.staminamax);
-		fprintf(f, "Gold on Body: %u\n", fc.gf.stamina, fc.gf.goldperson);
-		fprintf(f, "Gold in Stash: %u\n", fc.gf.stamina, fc.gf.goldstash);
+		fprintf(f, "Gold on Body: %u\n", fc.gf.goldperson);
+		fprintf(f, "Gold in Stash: %u\n", fc.gf.goldstash);
 
 		fprintf(f, "\n%u Items:\n", Items->Count());
 		for (Item* I = Items; I != 0; I = I->Next())

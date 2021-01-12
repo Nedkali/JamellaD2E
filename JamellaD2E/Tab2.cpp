@@ -1,5 +1,6 @@
 // Tab2.cpp from D2E
 #include "JamellaD2E.h"
+#include <richedit.h>
 // Tab2 Controls
 HWND hQuality;
 // ItemTree
@@ -233,7 +234,7 @@ LRESULT CALLBACK DefenseDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 			{
 				SelItem->DWBHistory.StepAdd(SelItem);
 				HGLOBAL TD = GlobalAlloc(GMEM_ZEROINIT, sizeof DefenseSearchThread);
-				struct DefenseSearchThread* NewThread = (DefenseSearchThread*)GlobalLock(TD);;
+				struct DefenseSearchThread* NewThread = (DefenseSearchThread*)GlobalLock(TD);
 				NewThread->ThreadData = TD;
 				NewThread->Item = SelItem;
 				NewThread->SelectAC = Val;
@@ -265,6 +266,7 @@ LRESULT CALLBACK EarDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 		SendDlgItemMessage(hWnd, IDC_TAB2Ear_Class, CB_RESETCONTENT, 0, 0);
 		for (int i = 0; i < 5; i++)
 			SendDlgItemMessage(hWnd, IDC_TAB2Ear_Class, CB_ADDSTRING, 0, (LPARAM)CharClasses[i]);
+
 		SendDlgItemMessage(hWnd, IDC_TAB2Ear_Class, CB_SETCURSEL, SelItem->OpponentClass(), 0);
 		// Set Level
 		SetDlgItemInt(hWnd, IDC_TAB2Ear_Level, SelItem->OpponentLevel(), FALSE);
@@ -549,8 +551,10 @@ LRESULT CALLBACK ProcessItemMessage(HWND hWnd, WPARAM wParam, LPARAM lParam)
 		if (!SelItem || SelItem->Busy) break;
 		SaveToClipboard(SelItem);
 
-		if (SelItemDeleteable()) {
-			if (SelItem == CopyBuffer) {
+		if (SelItemDeleteable())
+		{
+			if (SelItem == CopyBuffer)
+			{
 				delete CopyBuffer;
 				CopyBuffer = 0;
 			}
@@ -1891,8 +1895,7 @@ LRESULT CALLBACK Tab2InventoryProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 			MakeSelection(0);
 			for (int z = 1; z <= BodyPartsNum; z++)
 			{
-				if (xPos >= BodyParts[z].xOrig && xPos <= BodyParts[z].xOrig + BodyParts[z].xSize &&
-					yPos >= BodyParts[z].yOrig && yPos <= BodyParts[z].yOrig + BodyParts[z].ySize)
+				if (xPos >= BodyParts[z].xOrig && xPos <= BodyParts[z].xOrig + BodyParts[z].xSize && yPos >= BodyParts[z].yOrig && yPos <= BodyParts[z].yOrig + BodyParts[z].ySize)
 				{
 					for (Item* i = Items; i != 0; i = i->Next())
 					{

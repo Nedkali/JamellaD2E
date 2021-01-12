@@ -7,7 +7,8 @@ Item104Sm::Item104Sm()
 }
 Item104Sm::~Item104Sm()
 {
-	if (ListNext) {
+	if (ListNext)
+	{
 		delete ListNext;
 		ListNext = 0;
 	}

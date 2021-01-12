@@ -258,8 +258,7 @@ inline void LoadSuffixTree(HWND hWnd)
 			if ((MagicSuffixTable[MagicPreSuffixTree[z].ModID & 0xFF].MagicMask & SelItem->Info->MagicMask) == 0)
 				continue;
 			// Check if ELevel exceeded
-			if (RestrictELevel && RestrictELevelValue < MagicSuffixTable[MagicPreSuffixTree[z].ModID & 0xFF].ELevel) con
-				tinue;
+			if (RestrictELevel && RestrictELevelValue < MagicSuffixTable[MagicPreSuffixTree[z].ModID & 0xFF].ELevel) continue;
 			if (TVInsert.hParent == TVI_ROOT)
 			{
 				hBranch = MagicPreSuffixTree[z].hTree =
@@ -413,9 +412,7 @@ static void UpdateTab2Magic(HWND hWnd)
 {
 	for (int n = 0; n < 4; n++)
 	{
-		char* nth = n == 0 ? "1st" :
-			n == 1 ? "2nd" :
-			n == 2 ? "3rd" : "4th";
+		char* nth = n == 0 ? "1st" : n == 1 ? "2nd" : n == 2 ? "3rd" : "4th";
 		if (!PrefixMatch || !Prefix || !Prefix->Mod[n].Code)
 		{
 			EnableWindow(GetDlgItem(hWnd, PrefixControls[n].MatchBox), FALSE);
@@ -460,8 +457,7 @@ static void UpdateTab2Magic(HWND hWnd)
 				SetDlgItemInt(hWnd, PrefixControls[n].Min, Prefix->Mod[n].Min, 0);
 				SetDlgItemInt(hWnd, PrefixControls[n].Max, Prefix->Mod[n].Max - 1, 0);
 
-				SendDlgItemMessage(hWnd, PrefixControls[n].Slider, TBM_SETRANGE, TRUE,
-					MAKELONG(0, Prefix->Mod[n].Max - Prefix->Mod[n].Min - 1));
+				SendDlgItemMessage(hWnd, PrefixControls[n].Slider, TBM_SETRANGE, TRUE, MAKELONG(0, Prefix->Mod[n].Max - Prefix->Mod[n].Min - 1));
 				SendDlgItemMessage(hWnd, PrefixControls[n].Slider, TBM_SETPOS, TRUE, PrefixControls[n].ForceValue);
 			}
 			else
@@ -478,9 +474,7 @@ static void UpdateTab2Magic(HWND hWnd)
 	}
 	for (int n = 0; n < 1; n++)
 	{
-		char* nth = n == 0 ? "1st" :
-			n == 1 ? "2nd" :
-			n == 2 ? "3rd" : "4th";
+		char* nth = n == 0 ? "1st" : n == 1 ? "2nd" : n == 2 ? "3rd" : "4th";
 		if (!SuffixMatch || !Suffix || !Suffix->Mod[n].Code)
 		{
 			EnableWindow(GetDlgItem(hWnd, SuffixControls[n].MatchBox), FALSE);

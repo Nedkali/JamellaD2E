@@ -211,7 +211,8 @@ LRESULT CALLBACK Tab2EDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 		{
 		case IDT_TIMER:
 		{
-			if (SelItem && SelItem->Busy) {
+			if (SelItem && SelItem->Busy)
+			{
 				UpdateTab2E();
 				InvalidateRect(hExpertBox, NULL, FALSE);
 			}

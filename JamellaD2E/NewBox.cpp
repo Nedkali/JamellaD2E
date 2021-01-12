@@ -17,7 +17,8 @@ inline void MangleNames(char* d, const char* file, const char* nname, const char
 	d += strlen(d);
 	while (*file)
 	{
-		if (oname && *file == *oname && strncmp(file, oname, ol) == 0) {
+		if (oname && *file == *oname && strncmp(file, oname, ol) == 0)
+		{
 			strcpy(d, nname);
 			d += strlen(nname);
 			file += ol;
@@ -139,8 +140,8 @@ LRESULT CALLBACK RenameDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lP
 				HANDLE hFind = FindFirstFile(srchdir, &FData);
 				if (hFind != INVALID_HANDLE_VALUE)
 				{
-					if (MessageBox(hWnd, "A character with the name already exists!\nDo you want to delete him/her?",
-						PROGRAMNAME, MB_YESNO | MB_ICONEXCLAMATION) != IDYES) {
+					if (MessageBox(hWnd, "A character with the name already exists!\nDo you want to delete him/her?", PROGRAMNAME, MB_YESNO | MB_ICONEXCLAMATION) != IDYES)
+					{
 						FindClose(hFind);
 						return false;
 					}
@@ -174,8 +175,7 @@ LRESULT CALLBACK RenameDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lP
 						MangleNames(nfile, FData.cFileName, NewName, fc.Header.playername);
 						if (!MoveFile(FData.cFileName, nfile))
 						{
-							sprintf(buffer, "Error moving file '%s' to '%s'!\nPress OK to continue.", FData.cFileName,
-								nfile);
+							sprintf(buffer, "Error moving file '%s' to '%s'!\nPress OK to continue.", FData.cFileName, nfile);
 							ErrorBox(buffer);
 						}
 

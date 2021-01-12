@@ -216,8 +216,7 @@ LRESULT CALLBACK Tab3DialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		SendDlgItemMessage(hWnd, IDC_TAB3_BonusPlus, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hBmpPlus);
 		// Setup Track Bar
 		hTrack = GetDlgItem(hWnd, IDC_TAB3_Track);
-		SendMessage(hTrack, TBM_SETRANGE,
-			FALSE, (LPARAM)MAKELONG(0, 20));
+		SendMessage(hTrack, TBM_SETRANGE, FALSE, (LPARAM)MAKELONG(0, 20));
 		SendMessage(hTrack, TBM_SETTICFREQ, (LPARAM)1, 0);
 		SendMessage(hTrack, TBM_SETPAGESIZE, FALSE, (LPARAM)1);
 		SendMessage(hTrack, TBM_SETPOS, TRUE, (LPARAM)0);
@@ -274,8 +273,7 @@ LRESULT CALLBACK Tab3DialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				fc.IF.skills[classskills[selection].ifoffset - 1]++;
 				if (fc.IF.skills[classskills[selection].ifoffset - 1] > 20)
 					fc.IF.skills[classskills[selection].ifoffset - 1] = 20;
-				SetDlgItemInt(hWnd, props[selection].idedit, fc.IF.skills[classskills[selection].ifoffset - 1], FALSE
-				);
+				SetDlgItemInt(hWnd, props[selection].idedit, fc.IF.skills[classskills[selection].ifoffset - 1], FALSE);
 				SendMessage(hTrack, TBM_SETPOS, TRUE, (LPARAM)fc.IF.skills[classskills[selection].ifoffset - 1]);
 			}
 			else
@@ -304,8 +302,7 @@ LRESULT CALLBACK Tab3DialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				SetDlgItemInt(hWnd, props[i].idedit, 20, FALSE);
 				if (selection > 0)
 				{
-					SendMessage(hTrack, TBM_SETPOS, TRUE, (LPARAM)fc.IF.skills[classskills[selection].ifoffset - 1])
-						;
+					SendMessage(hTrack, TBM_SETPOS, TRUE, (LPARAM)fc.IF.skills[classskills[selection].ifoffset - 1]);
 				}
 			}
 		}
@@ -328,8 +325,7 @@ LRESULT CALLBACK Tab3DialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 					(LOWORD(wParam) == IDR_TAB3_SetAll20) ? 20 : 0;
 				SetDlgItemInt(hWnd, props[i].idedit, fc.IF.skills[i], FALSE);
 				if (selection > 0) {
-					SendMessage(hTrack, TBM_SETPOS, TRUE, (LPARAM)fc.IF.skills[classskills[selection].ifoffset - 1])
-						;
+					SendMessage(hTrack, TBM_SETPOS, TRUE, (LPARAM)fc.IF.skills[classskills[selection].ifoffset - 1]);
 				}
 			}
 		}
@@ -342,8 +338,7 @@ LRESULT CALLBACK Tab3DialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				HMENU hMenu = GetSubMenu(hBatchMenu, 2);
 				POINT Pos;
 				GetCursorPos(&Pos);
-				TrackPopupMenu(hMenu, TPM_LEFTALIGN | TPM_LEFTBUTTON,
-					Pos.x, Pos.y, 0, hWnd, NULL);
+				TrackPopupMenu(hMenu, TPM_LEFTALIGN | TPM_LEFTBUTTON, Pos.x, Pos.y, 0, hWnd, NULL);
 			}
 			break;
 			}

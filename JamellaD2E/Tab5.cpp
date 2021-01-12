@@ -50,8 +50,7 @@ LRESULT CALLBACK Tab5DialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				updatewaypoints(hWnd);
 			}
 		}
-		else if (LOWORD(wParam) >= IDC_TAB5_Way01 && LOWORD(wParam) <= IDC_TAB5_Way33 &&
-			(HIWORD(wParam) == BN_CLICKED || HIWORD(wParam) == BN_DBLCLK))
+		else if (LOWORD(wParam) >= IDC_TAB5_Way01 && LOWORD(wParam) <= IDC_TAB5_Way33 && (HIWORD(wParam) == BN_CLICKED || HIWORD(wParam) == BN_DBLCLK))
 		{
 			DWORD o = 1 << (LOWORD(wParam) - IDC_TAB5_Way01);
 			if (*waypoints & o)
@@ -67,8 +66,7 @@ LRESULT CALLBACK Tab5DialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			POINT Pos;
 			GetCursorPos(&Pos);
 
-			TrackPopupMenu(hMenu, TPM_LEFTALIGN | TPM_LEFTBUTTON,
-				Pos.x, Pos.y, 0, hWnd, NULL);
+			TrackPopupMenu(hMenu, TPM_LEFTALIGN | TPM_LEFTBUTTON, Pos.x, Pos.y, 0, hWnd, NULL);
 		}
 		else if (LOWORD(wParam) == IDR_TAB5_ActivateHereAll)
 		{

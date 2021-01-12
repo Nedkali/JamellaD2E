@@ -130,8 +130,8 @@ Item* MakeItemFromFile(HANDLE hFile)
 	}
 
 	unsigned long read;
-	BYTE buff[512];
-	ReadFile(hFile, buff, fsize, &read, 0);
+	BYTE buff[512]{};
+	bool result = ReadFile(hFile, buff, fsize, &read, 0);
 
 	if (read != fsize)
 	{
@@ -157,9 +157,7 @@ static UINT_PTR CALLBACK OFNHookProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 			char QueryFilename[128];
 			int x = CommDlg_OpenSave_GetFilePath(((NMHDR*)lParam)->hwndFrom, QueryFilename, sizeof QueryFilename);
 			// Open File
-			HANDLE hFile = CreateFile(QueryFilename,
-				GENERIC_READ, FILE_SHARE_WRITE, NULL,
-				OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+			HANDLE hFile = CreateFile(QueryFilename, GENERIC_READ, FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 			if (hFile == INVALID_HANDLE_VALUE) return true;
 
@@ -178,12 +176,9 @@ static UINT_PTR CALLBACK OFNHookProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM
 				char RTF[2048];
 				char RTFBuffer[260];
 				ASCIItoRTF(RTFBuffer, ReadItemErrorString);
-				sprintf(RTF, "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1031 {\\fonttbl{\\f0\\fswiss\\fcharset0 MS Sa
-					ns Serif;
-			}} \\uc1\\pard\\qc\\b\\f0\\fs16% s\\par
-		}",RTFBuffer);
-					RTFStreamSend(hWnd, IDC_IBWSR_RichText, RTF);
-			SendDlgItemMessage(hWnd, IDC_IBWSR_Bitmap, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)0);
+				sprintf(RTF, "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1031 {\\fonttbl{\\f0\\fswiss\\fcharset0 MS Sans Serif;}} \\uc1\\pard\\qc\\b\\f0\\fs16% s\\par}", RTFBuffer);
+				RTFStreamSend(hWnd, IDC_IBWSR_RichText, RTF);
+				SendDlgItemMessage(hWnd, IDC_IBWSR_Bitmap, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)0);
 	}
 
 	CloseHandle(hFile);
@@ -207,8 +202,7 @@ bool LoadItemFile(HWND hWnd)
 		ZeroMemory(&ofn, sizeof(OPENFILENAME));
 		ofn.lStructSize = sizeof(OPENFILENAME);
 		ofn.hwndOwner = hWnd;
-		ofn.lpstrFilter = "D2 Saved Item (*.d2i;*.item;*.ite;*.itm)\0*.d2i;*.item;*.ite;*.itm\0Other Files (*.*)\0*.*\0"
-			;
+		ofn.lpstrFilter = "D2 Saved Item (*.d2i;*.item;*.ite;*.itm)\0*.d2i;*.item;*.ite;*.itm\0Other Files (*.*)\0*.*\0";
 		ofn.nFilterIndex = 0;
 		ofn.lpstrFile = QueryFilename;
 		ofn.nMaxFile = sizeof(QueryFilename);
@@ -220,23 +214,18 @@ bool LoadItemFile(HWND hWnd)
 		ofn.lpTemplateName = MAKEINTRESOURCE(IDD_IBWSR);
 		ofn.lpfnHook = &OFNHookProc;
 
-		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOREADONLYRETURN | OFN_HIDEREADONLY | OFN_ENABLETEMPLATE
-			| OFN_EXPLORER | OFN_ENABLEHOOK;
-
+		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOREADONLYRETURN | OFN_HIDEREADONLY | OFN_ENABLETEMPLATE | OFN_EXPLORER | OFN_ENABLEHOOK;
 		ZeroMemory(&QueryFilename, sizeof(QueryFilename));
 	}
 
 	if (GetOpenFileName(&ofn))
 	{
 		// Open File
-		HANDLE hFile = CreateFile(QueryFilename,
-			GENERIC_READ, FILE_SHARE_WRITE, NULL,
-			OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+		HANDLE hFile = CreateFile(QueryFilename, GENERIC_READ, FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 		if (hFile == INVALID_HANDLE_VALUE)
 		{
-			MessageBox(hWnd, "Could not open file!", PROGRAMNAME,
-				MB_OK | MB_ICONSTOP | MB_APPLMODAL);
+			MessageBox(hWnd, "Could not open file!", PROGRAMNAME, MB_OK | MB_ICONSTOP | MB_APPLMODAL);
 			return false;
 		}
 
@@ -300,14 +289,11 @@ bool SaveItemFile(HWND hWnd)
 	if (GetSaveFileName(&ofn))
 	{
 		// Open File
-		HANDLE hFile = CreateFile(QueryFilename,
-			GENERIC_WRITE, FILE_SHARE_WRITE, NULL,
-			CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+		HANDLE hFile = CreateFile(QueryFilename, GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
 		if (hFile == INVALID_HANDLE_VALUE)
 		{
-			MessageBox(hWnd, "Could not open file!", PROGRAMNAME,
-				MB_OK | MB_ICONSTOP | MB_APPLMODAL);
+			MessageBox(hWnd, "Could not open file!", PROGRAMNAME, MB_OK | MB_ICONSTOP | MB_APPLMODAL);
 			return true;
 		}
 
@@ -315,8 +301,7 @@ bool SaveItemFile(HWND hWnd)
 		WriteFile(hFile, CopyBuffer->GetItemRecord(), CopyBuffer->ItemRecordLength(), &written, 0);
 		if (written != (unsigned long)CopyBuffer->ItemRecordLength())
 		{
-			MessageBox(hWnd, "Could not write to file!", PROGRAMNAME,
-				MB_OK | MB_ICONSTOP | MB_APPLMODAL);
+			MessageBox(hWnd, "Could not write to file!", PROGRAMNAME, MB_OK | MB_ICONSTOP | MB_APPLMODAL);
 		}
 		if (CopyBuffer->Socketed())
 		{
@@ -327,8 +312,7 @@ bool SaveItemFile(HWND hWnd)
 
 				if (written != (unsigned long)G->ItemRecordLength())
 				{
-					MessageBox(hWnd, "Could not write to file!", PROGRAMNAME,
-						MB_OK | MB_ICONSTOP | MB_APPLMODAL);
+					MessageBox(hWnd, "Could not write to file!", PROGRAMNAME, MB_OK | MB_ICONSTOP | MB_APPLMODAL);
 				}
 			}
 		}

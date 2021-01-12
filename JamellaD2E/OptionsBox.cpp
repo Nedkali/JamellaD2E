@@ -24,8 +24,7 @@ LRESULT CALLBACK UOptionsDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 		for (int u = 0; u < sizeof CheckBoxes / sizeof CheckBoxes[0]; u++)
 		{
 			if (CheckBoxes[u].Expert) continue;
-			CheckDlgButton(hWnd, CheckBoxes[u].DlgID,
-				*CheckBoxes[u].Value ? BST_CHECKED : BST_UNCHECKED);
+			CheckDlgButton(hWnd, CheckBoxes[u].DlgID, *CheckBoxes[u].Value ? BST_CHECKED : BST_UNCHECKED);
 		}
 	}
 	return true;
@@ -66,10 +65,8 @@ LRESULT CALLBACK EOptionsDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 	{
 	case WM_INITDIALOG:
 	{
-		CheckRadioButton(hWnd, IDC_OPTIONS_IFormat1, IDC_OPTIONS_IFormat3,
-			IDC_OPTIONS_IFormat1 + RegOptions.CreateItemRecordFormat);
-		CheckDlgButton(hWnd, IDC_UOPTIONS_AllSocktable,
-			RegOptions.AllItemsSocketable ? BST_CHECKED : BST_UNCHECKED);
+		CheckRadioButton(hWnd, IDC_OPTIONS_IFormat1, IDC_OPTIONS_IFormat3, IDC_OPTIONS_IFormat1 + RegOptions.CreateItemRecordFormat);
+		CheckDlgButton(hWnd, IDC_UOPTIONS_AllSocktable, RegOptions.AllItemsSocketable ? BST_CHECKED : BST_UNCHECKED);
 	}
 	return true;
 	case WM_COMMAND:

@@ -211,8 +211,7 @@ inline void LoadAttributesTree(HWND hWnd)
 				break;
 			}
 			if (MagicPreSuffixTree[z].ModID & 256) continue;
-			if ((MagicPrefixTable[MagicPreSuffixTree[z].ModID & 0xFF].MagicMask & SelItem->Info->MagicMask) == 0) contin
-				ue;
+			if ((MagicPrefixTable[MagicPreSuffixTree[z].ModID & 0xFF].MagicMask & SelItem->Info->MagicMask) == 0) continue;
 			// Check if ELevel exceeded
 			if (RestrictELevel && RestrictELevelValue < MagicPrefixTable[MagicPreSuffixTree[z].ModID].ELevel) continue;
 			if (TVInsert.hParent == hPrefix)
@@ -425,8 +424,8 @@ static void TVMakeSelection(HWND hWnd, int n)
 {
 	for (int z = 0; z < nMagicPreSuffixTree; z++)
 	{
-		if (MagicPreSuffixTree[z].ModID == n && MagicPreSuffixTree[z].hTree) {
-
+		if (MagicPreSuffixTree[z].ModID == n && MagicPreSuffixTree[z].hTree)
+		{
 			userselecting = true;
 			if (MagicPreSuffixTree[z].ModID & 256) {
 				TreeView_SelectItem(hTVP, 0);
@@ -703,7 +702,8 @@ LRESULT CALLBACK Tab2RareDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 			 if (userselecting) break;
 			 userselecting = true;
 			 NM_TREEVIEW* NMTreeView = (NM_TREEVIEW*)lParam;
-			 if (UserSelected >= 0 && UserSelected <= 5) {
+			 if (UserSelected >= 0 && UserSelected <= 5)
+			 {
 				 int n = UserSelected;
 				 if (NMTreeView->itemNew.lParam >= 0)
 				 {

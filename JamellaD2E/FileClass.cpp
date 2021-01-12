@@ -201,7 +201,7 @@ bool fileclass::loadfile(HWND hWnd, const char* tempfilename)
 	DWORD fileread;
 
 	// read whole file
-	ReadFile(hFile, filedata, filesize, &fileread, NULL);
+	bool result = ReadFile(hFile, filedata, filesize, &fileread, NULL);
 
 	if (filesize != fileread)
 	{
@@ -298,7 +298,7 @@ bool fileclass::savefile(HWND hWnd)
 		gf.stamina *= 256;
 		gf.staminamax *= 256;
 		DWORD* a = &gf.strength;
-		BYTE gftmp[70];
+		BYTE gftmp[70]{};
 		BYTE* d = (gftmp + 5);
 		*(WORD*)(&gftmp[0]) = 0x6667;
 		*(WORD*)(&gftmp[2]) = 0x0000;

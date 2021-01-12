@@ -118,15 +118,13 @@ void updatequests(HWND hWnd)
 			struct quest* quest = &quests[x + id];
 			WORD qstat = ptr[quest->offset];
 			SetDlgItemText(hWnd, interfaces[id].text, quest->string);
-			SendDlgItemMessage(hWnd, interfaces[id].bitmap,
-				STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)quest->hbitmap);
+			SendDlgItemMessage(hWnd, interfaces[id].bitmap, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)quest->hbitmap);
 			EnableWindow(interfaces[id].hcombo, TRUE);
 			SendMessage(interfaces[id].hcombo, CB_RESETCONTENT, 0, 0);
 			bool addstatus = true;
 			for (int i = 0; quest->stati[i].text; i++)
 			{
-				SendMessage(interfaces[id].hcombo,
-					CB_ADDSTRING, 0, (LPARAM)quest->stati[i].text);
+				SendMessage(interfaces[id].hcombo, CB_ADDSTRING, 0, (LPARAM)quest->stati[i].text);
 				if ((qstat & 0xFF) != (quest->stati[i].value & 0xFF)) continue;
 
 				if (quest->stati[i].value & 0xFF00)
@@ -139,9 +137,8 @@ void updatequests(HWND hWnd)
 			if (addstatus)
 			{
 				sprintf(buffer, "Status %4X", qstat);
-				SendMessage(interfaces[id].hcombo,
-					CB_ADDSTRING, 0, (LPARAM)buffer);
-				SendMessage(interfaces[id].hcombo, CB_SETCURSEL, i, 0);
+				SendMessage(interfaces[id].hcombo, CB_ADDSTRING, 0, (LPARAM)buffer);
+				SendMessage(interfaces[id].hcombo, CB_SETCURSEL, id, 0);
 			}
 		}
 		else
@@ -176,10 +173,8 @@ LRESULT CALLBACK Tab4DialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			interfaces[x].hcombo = GetDlgItem(hWnd, interfaces[x].combo);
 		}
 		// Select default levels
-		CheckRadioButton(hWnd, IDC_TAB4_Diff1, IDC_TAB4_Diff3,
-			IDC_TAB4_Diff1);
-		CheckRadioButton(hWnd, IDC_TAB4_Act1, IDC_TAB4_Act4,
-			IDC_TAB4_Act1);
+		CheckRadioButton(hWnd, IDC_TAB4_Diff1, IDC_TAB4_Diff3, IDC_TAB4_Diff1);
+		CheckRadioButton(hWnd, IDC_TAB4_Act1, IDC_TAB4_Act4, IDC_TAB4_Act1);
 		act = 0;
 		ptr = fc.Woo.quests1;
 		updateacts(hWnd);
@@ -187,8 +182,7 @@ LRESULT CALLBACK Tab4DialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		SendDlgItemMessage(hWnd, IDC_TAB4_SelAll, CB_RESETCONTENT, 0, 0);
 		for (int i = 0; allcombo[i].text; i++)
 		{
-			SendDlgItemMessage(hWnd, IDC_TAB4_SelAll,
-				CB_ADDSTRING, 0, (LPARAM)allcombo[i].text);
+			SendDlgItemMessage(hWnd, IDC_TAB4_SelAll, CB_ADDSTRING, 0, (LPARAM)allcombo[i].text);
 		}
 		SendDlgItemMessage(hWnd, IDC_TAB4_SelAll, CB_SETCURSEL, 0, 0);
 		hToolTip = CreateToolTipCtrl(hWnd, IDD_TAB4, true);

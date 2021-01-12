@@ -47,9 +47,7 @@ LRESULT CALLBACK Tab2RndDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 			GetWindowRect(hWnd, &rWindow);
 			GetWindowRect(hMainDialog, &DialogPos);
 			DialogPos.left -= rWindow.right - rWindow.left;
-			SetWindowPos(hWnd, HWND_TOP,
-				DialogPos.left, DialogPos.top,
-				0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
+			SetWindowPos(hWnd, HWND_TOP, DialogPos.left, DialogPos.top, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE);
 		}
 		ShowWindow(hWnd, SW_SHOWNOACTIVATE);
 	}

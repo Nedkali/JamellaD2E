@@ -96,13 +96,10 @@ void D2ELoadResources()
 					exit(0);
 				}
 
-				if (bmpinfo.bmWidth != ItemInfos[z].SizeX * 29 - 1 ||
-					bmpinfo.bmHeight != ItemInfos[z].SizeY * 29 - 1)
+				if (bmpinfo.bmWidth != ItemInfos[z].SizeX * 29 - 1 || bmpinfo.bmHeight != ItemInfos[z].SizeY * 29 - 1)
 				{
-					sprintf(buffer, "Resource Error [%i|%i]\nID = %i", bmpinfo.bmWidth, bmpinfo.bmHeight, ItemInfos[z].Bitma
-						pID);
-					MessageBox(hTabDialog, buffer, PROGRAMNAME,
-						MB_OK | MB_ICONSTOP | MB_APPLMODAL);
+					sprintf(buffer, "Resource Error [%i|%i]\nID = %i", bmpinfo.bmWidth, bmpinfo.bmHeight, ItemInfos[z].BitmapID);
+					MessageBox(hTabDialog, buffer, PROGRAMNAME, MB_OK | MB_ICONSTOP | MB_APPLMODAL);
 					exit(0);
 				}
 			}

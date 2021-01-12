@@ -52,10 +52,7 @@ void ResizeDialog()
 			+ GetSystemMetrics(SM_CYCAPTION);
 		int top = (WorkArea.bottom - WorkArea.top - height) / 2;
 		int left = (WorkArea.right - WorkArea.left - width) / 2;
-		SetWindowPos(hMainDialog, NULL,
-			left, top,
-			width, height,
-			SWP_NOZORDER);
+		SetWindowPos(hMainDialog, NULL, left, top, width, height, SWP_NOZORDER);
 	}
 }
 void switchtab(int i)
@@ -68,14 +65,8 @@ void switchtab(int i)
 		// Show Jamella
 		TabCtrl_SetCurSel(hTab, -1);
 		TabSelection = -1;
-		hTabDialog = CreateDialogIndirect(
-			hInstance,
-			JamellaTab.dialogtemplate,
-			hTab,
-			(DLGPROC)JamellaTab.proc);
-		SetWindowPos(hTabDialog, HWND_TOP,
-			rTabDialog.left, rTabDialog.top, 0, 0,
-			SWP_NOSIZE);
+		hTabDialog = CreateDialogIndirect(hInstance, JamellaTab.dialogtemplate, hTab, (DLGPROC)JamellaTab.proc);
+		SetWindowPos(hTabDialog, HWND_TOP, rTabDialog.left, rTabDialog.top, 0, 0, SWP_NOSIZE);
 		ResizeDialog();
 
 		ShowWindow(hTabDialog, SW_SHOW);
@@ -113,18 +104,8 @@ int MainDialog(const char* CmdLine)
 	RegisterClassEx(&wcx);
 	HMENU hMainMenu = LoadMenu(NULL, MAKEINTRESOURCE(IDR_MAINDIALOG));
 	// Secondly create the Main Dialog Box
-	hMainDialog = CreateWindowEx(
-		0,
-		"D2EMainDialog", PROGRAMNAME,
-		WS_CAPTION | WS_SYSMENU | WS_CLIPCHILDREN | WS_MINIMIZEBOX,
-		CW_USEDEFAULT,
-		CW_USEDEFAULT,
-		500,
-		500,
-		(HWND)NULL,
-		hMainMenu,
-		hInstance,
-		(LPVOID)NULL);
+	hMainDialog = CreateWindowEx(0, "D2EMainDialog", PROGRAMNAME, WS_CAPTION | WS_SYSMENU | WS_CLIPCHILDREN | WS_MINIMIZEBOX, CW_USEDEFAULT,
+		CW_USEDEFAULT, 500, 500, (HWND)NULL, hMainMenu, hInstance, 	(LPVOID)NULL);
 
 	if (!hMainDialog) return ErrorMessage();
 	// Setup Tab Control 
@@ -138,11 +119,8 @@ int MainDialog(const char* CmdLine)
 
 	GetClientRect(hMainDialog, &rMainDialog);
 	// Create Tab Control
-	hTab = CreateWindow(WC_TABCONTROL, "",
-		WS_CHILD | WS_CLIPSIBLINGS | WS_VISIBLE | TCS_HOTTRACK,
-		rMainDialog.left, rMainDialog.top,
-		rMainDialog.right - rMainDialog.left, rMainDialog.bottom - rMainDialog.top,
-		hMainDialog, NULL, hInstance, NULL);
+	hTab = CreateWindow(WC_TABCONTROL, "", 	WS_CHILD | WS_CLIPSIBLINGS | WS_VISIBLE | TCS_HOTTRACK, 
+		rMainDialog.left, rMainDialog.top, 	rMainDialog.right - rMainDialog.left, rMainDialog.bottom - rMainDialog.top, hMainDialog, NULL, hInstance, NULL);
 
 	if (!hTab) {
 		ErrorMessage();
@@ -151,12 +129,7 @@ int MainDialog(const char* CmdLine)
 	}
 	TabCtrl_SetImageList(hTab, himl);
 	// Set nice font
-	HFONT fTab = CreateFont(8, 0,
-		0, 0, 0,
-		FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_CHARACTER_PRECIS,
-		DEFAULT_QUALITY, DEFAULT_PITCH,
-		"MS Sans Serif");
+	HFONT fTab = CreateFont(8, 0, 0, 0, 0, 	FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_CHARACTER_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "MS Sans Serif");
 	PostMessage(hTab, WM_SETFONT, (WPARAM)fTab, TRUE);
 	// Load Tab Dialogs
 	for (int j = 0; j < Tabsn; j++)
@@ -181,11 +154,7 @@ int MainDialog(const char* CmdLine)
 		HRSRC hrsrc = FindResource(NULL, MAKEINTRESOURCE(IDD_PROGRESS), RT_DIALOG);
 		HGLOBAL hglb = LoadResource(hInstance, hrsrc);
 		DLGTEMPLATE* dlgtemp = (DLGTEMPLATE*)LockResource(hglb);
-		hTabDialog = CreateDialogIndirect(
-			hInstance,
-			dlgtemp,
-			hTab,
-			(DLGPROC)TabDialogProc);
+		hTabDialog = CreateDialogIndirect(hInstance, dlgtemp, hTab, (DLGPROC)TabDialogProc);
 	}
 	TabCtrl_SetCurSel(hTab, -1);
 	TabSelection = -1;
@@ -196,16 +165,11 @@ int MainDialog(const char* CmdLine)
 	rTab.bottom -= rTab.top;
 	rTab.top = 0;
 	rTab.left = 0;
-	SetWindowPos(hTab, NULL,
-		0, 0,
-		rTab.right, rTab.bottom,
-		SWP_NOZORDER);
+	SetWindowPos(hTab, NULL, 0, 0, rTab.right, rTab.bottom, SWP_NOZORDER);
 	// Adjust for Dialog Size
 	CopyRect(&rTabDialog, &rTab);
 	TabCtrl_AdjustRect(hTab, FALSE, &rTabDialog);
-	SetWindowPos(hTabDialog, HWND_TOP,
-		rTabDialog.left, rTabDialog.top, 0, 0,
-		SWP_NOSIZE);
+	SetWindowPos(hTabDialog, HWND_TOP, rTabDialog.left, rTabDialog.top, 0, 0, SWP_NOSIZE);
 	ResizeDialog();
 	// Set initial states of main controls
 	SendDlgItemMessage(hTabDialog, IDC_PROGRESS_Bar, PBM_SETBARCOLOR, 0, PROGRESSCOLOR);
@@ -224,7 +188,8 @@ int MainDialog(const char* CmdLine)
 	SetInvGridPreset(1);
 	// Set working states of main controls
 	EnableWindow(hTab, TRUE);
-	for (int z = 0; z < GetMenuItemCount(hMainMenu); z++) {
+	for (int z = 0; z < GetMenuItemCount(hMainMenu); z++)
+	{
 		EnableMenuItem(hMainMenu, z, MF_BYPOSITION | MF_ENABLED);
 	}
 	// Switch to Jamella's Dialog
@@ -303,8 +268,7 @@ LRESULT CALLBACK MainDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				if (fc.isloaded())
 				{
 					if (!RegOptions.NoAnnoyingMsgs) {
-						int user = MessageBox(hWnd, "Do you really want to discard all changes?", PROGRAMNAME,
-							MB_YESNO | MB_ICONQUESTION | MB_APPLMODAL);
+						int user = MessageBox(hWnd, "Do you really want to discard all changes?", PROGRAMNAME, MB_YESNO | MB_ICONQUESTION | MB_APPLMODAL);
 
 						if (user != IDYES) break;
 					}
@@ -324,8 +288,7 @@ LRESULT CALLBACK MainDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				{
 					if (!RegOptions.NoAnnoyingMsgs) {
 
-						int user = MessageBox(hWnd, "Do you really want to discard all changes?", PROGRAMNAME,
-							MB_YESNO | MB_ICONQUESTION | MB_APPLMODAL);
+						int user = MessageBox(hWnd, "Do you really want to discard all changes?", PROGRAMNAME, MB_YESNO | MB_ICONQUESTION | MB_APPLMODAL);
 
 						if (user != IDYES) break;
 					}
@@ -345,8 +308,7 @@ LRESULT CALLBACK MainDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 				}
 				else
 				{
-					MessageBox(hWnd, "You didn't open a file!", PROGRAMNAME,
-						MB_OK | MB_ICONEXCLAMATION | MB_APPLMODAL);
+					MessageBox(hWnd, "You didn't open a file!", PROGRAMNAME, MB_OK | MB_ICONEXCLAMATION | MB_APPLMODAL);
 				}
 			}
 			return true;
@@ -355,8 +317,7 @@ LRESULT CALLBACK MainDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			if (fc.isloaded())
 			{
 				if (!RegOptions.NoAnnoyingMsgs) {
-					int user = MessageBox(hWnd, "Do you really want to discard all changes?", PROGRAMNAME,
-						MB_YESNO | MB_ICONQUESTION | MB_APPLMODAL);
+					int user = MessageBox(hWnd, "Do you really want to discard all changes?", PROGRAMNAME, MB_YESNO | MB_ICONQUESTION | MB_APPLMODAL);
 
 					if (user != IDYES) break;
 				}
@@ -365,8 +326,7 @@ LRESULT CALLBACK MainDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			}
 			else
 			{
-				MessageBox(hWnd, "You didn't open a file!", PROGRAMNAME,
-					MB_OK | MB_ICONEXCLAMATION | MB_APPLMODAL);
+				MessageBox(hWnd, "You didn't open a file!", PROGRAMNAME, MB_OK | MB_ICONEXCLAMATION | MB_APPLMODAL);
 			}
 		}
 		return true;
@@ -375,8 +335,7 @@ LRESULT CALLBACK MainDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			if (fc.isloaded())
 			{
 				if (!RegOptions.NoAnnoyingMsgs) {
-					int user = MessageBox(hWnd, "Do you really want to discard all changes?", PROGRAMNAME,
-						MB_YESNO | MB_ICONQUESTION | MB_APPLMODAL);
+					int user = MessageBox(hWnd, "Do you really want to discard all changes?", PROGRAMNAME, MB_YESNO | MB_ICONQUESTION | MB_APPLMODAL);
 
 					if (user != IDYES) break;
 				}
@@ -385,8 +344,7 @@ LRESULT CALLBACK MainDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			}
 			else
 			{
-				MessageBox(hWnd, "You didn't open a file!", PROGRAMNAME,
-					MB_OK | MB_ICONEXCLAMATION | MB_APPLMODAL);
+				MessageBox(hWnd, "You didn't open a file!", PROGRAMNAME, MB_OK | MB_ICONEXCLAMATION | MB_APPLMODAL);
 			}
 		}
 		return true;
@@ -406,8 +364,7 @@ LRESULT CALLBACK MainDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		case IDR_EXIT:
 			if (fc.isloaded())
 			{
-				if (RegOptions.NoAnnoyingMsgs || MessageBox(hMainDialog, "Are you sure you want to exit and discard all changes ? ",
-					PROGRAMNAME, MB_YESNO) == IDYES)
+				if (RegOptions.NoAnnoyingMsgs || MessageBox(hMainDialog, "Are you sure you want to exit and discard all changes ? ", PROGRAMNAME, MB_YESNO) == IDYES)
 				{
 					PostQuitMessage(0);
 					DestroyWindow(hMainDialog);
@@ -454,14 +411,8 @@ LRESULT CALLBACK MainDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 			 // Create the new child dialog box.
 			 if (Tabs[TabSelection].dialogtemplate)
 			 {
-				 hTabDialog = CreateDialogIndirect(
-					 hInstance,
-					 Tabs[TabSelection].dialogtemplate,
-					 hTab,
-					 (DLGPROC)(Tabs[TabSelection].proc ? Tabs[TabSelection].proc : TabDialogProc));
-				 SetWindowPos(hTabDialog, HWND_TOP,
-					 rTabDialog.left, rTabDialog.top, 0, 0,
-					 SWP_NOSIZE);
+				 hTabDialog = CreateDialogIndirect(hInstance, Tabs[TabSelection].dialogtemplate, hTab, (DLGPROC)(Tabs[TabSelection].proc ? Tabs[TabSelection].proc : TabDialogProc));
+				 SetWindowPos(hTabDialog, HWND_TOP, rTabDialog.left, rTabDialog.top, 0, 0,  SWP_NOSIZE);
 				 ResizeDialog();
 				 ShowWindow(hTabDialog, SW_SHOW);
 			 }
@@ -474,8 +425,7 @@ LRESULT CALLBACK MainDialogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
  case WM_CLOSE:
 	 if (fc.isloaded())
 	 {
-		 if (RegOptions.NoAnnoyingMsgs || MessageBox(hMainDialog, "Are you sure you want to exit and discard all changes?",
-			 PROGRAMNAME, MB_YESNO) == IDYES)
+		 if (RegOptions.NoAnnoyingMsgs || MessageBox(hMainDialog, "Are you sure you want to exit and discard all changes?", PROGRAMNAME, MB_YESNO) == IDYES)
 		 {
 			 PostQuitMessage(0);
 			 DestroyWindow(hMainDialog);

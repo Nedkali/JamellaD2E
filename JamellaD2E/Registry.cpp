@@ -14,9 +14,7 @@ static int CheckFileExtention(const char* Extention, const char* ProgID)
 	HKEY Key;
 	if (RegOpenKeyEx(HKEY_CLASSES_ROOT, Extention, 0, KEY_ALL_ACCESS, &Key) == ERROR_SUCCESS)
 	{ // Check Key Contents
-		if (RegQueryValueEx(Key, NULL, NULL, &Type, (unsigned char*)&Query, &Size) == ERROR_SUCCESS &&
-			Type == REG_SZ &&
-			strcmp(Query, ProgID) == 0)
+		if (RegQueryValueEx(Key, NULL, NULL, &Type, (unsigned char*)&Query, &Size) == ERROR_SUCCESS && Type == REG_SZ && strcmp(Query, ProgID) == 0)
 		{
 		}
 		else
@@ -53,9 +51,7 @@ static int CheckDescription(const char* ProgID, const char* Description)
 	HKEY Key;
 	if (RegOpenKeyEx(HKEY_CLASSES_ROOT, ProgID, 0, KEY_ALL_ACCESS, &Key) == ERROR_SUCCESS)
 	{ // Check Key Contents
-		if (RegQueryValueEx(Key, NULL, NULL, &Type, (unsigned char*)&Query, &Size) == ERROR_SUCCESS &&
-			Type == REG_SZ &&
-			strcmp(Query, Description) == 0)
+		if (RegQueryValueEx(Key, NULL, NULL, &Type, (unsigned char*)&Query, &Size) == ERROR_SUCCESS && Type == REG_SZ && strcmp(Query, Description) == 0)
 		{
 		}
 		else
@@ -95,9 +91,7 @@ static int CheckIcon(const char* ProgID, const char* IconPath, const int IconNum
 	HKEY Key;
 	if (RegOpenKeyEx(HKEY_CLASSES_ROOT, KeyPath, 0, KEY_ALL_ACCESS, &Key) == ERROR_SUCCESS)
 	{ // Check Key Contents
-		if (RegQueryValueEx(Key, NULL, NULL, &Type, (unsigned char*)&Query, &Size) == ERROR_SUCCESS &&
-			Type == REG_SZ &&
-			strcmp(Query, FilePath) == 0)
+		if (RegQueryValueEx(Key, NULL, NULL, &Type, (unsigned char*)&Query, &Size) == ERROR_SUCCESS && Type == REG_SZ && strcmp(Query, FilePath) == 0)
 		{
 		}
 		else
@@ -136,9 +130,7 @@ static int CheckShellVerb(const char* ProgID, const char* Verb, const char* Comm
 	HKEY Key;
 	if (RegOpenKeyEx(HKEY_CLASSES_ROOT, KeyPath, 0, KEY_ALL_ACCESS, &Key) == ERROR_SUCCESS)
 	{ // Check Key Contents
-		if (RegQueryValueEx(Key, NULL, NULL, &Type, (unsigned char*)&Query, &Size) == ERROR_SUCCESS &&
-			Type == REG_SZ &&
-			strcmp(Query, Command) == 0)
+		if (RegQueryValueEx(Key, NULL, NULL, &Type, (unsigned char*)&Query, &Size) == ERROR_SUCCESS && Type == REG_SZ && strcmp(Query, Command) == 0)
 		{
 		}
 		else
@@ -229,7 +221,8 @@ void LoadEditorRegistryValues()
 
 		for (int z = 0; z < sizeof QueryValues / sizeof QueryValues[0]; z++)
 		{
-			if (QueryValues[z].Type == REG_DWORD) {
+			if (QueryValues[z].Type == REG_DWORD)
+			{
 				*(DWORD*)QueryValues[z].Ptr = QueryValues[z].Default;
 			}
 		}
@@ -240,14 +233,17 @@ void LoadEditorRegistryValues()
 	{
 		if (RegQueryValueEx(Key, QueryValues[z].ValName, 0, &Type, NULL, NULL) != ERROR_SUCCESS)
 		{
-			if (QueryValues[z].Type == REG_DWORD) {
+			if (QueryValues[z].Type == REG_DWORD)
+			{
 				*(DWORD*)QueryValues[z].Ptr = QueryValues[z].Default;
 			}
 		}
 		else if (Type == QueryValues[z].Type)
 		{
-			if (RegQueryValueEx(Key, QueryValues[z].ValName, 0, &Type, QueryValues[z].Ptr, &QueryValues[z].PtrSize) != ERROR_SUCCESS) {
-				if (QueryValues[z].Type == REG_DWORD) {
+			if (RegQueryValueEx(Key, QueryValues[z].ValName, 0, &Type, QueryValues[z].Ptr, &QueryValues[z].PtrSize) != ERROR_SUCCESS)
+			{
+				if (QueryValues[z].Type == REG_DWORD)
+				{
 					*(DWORD*)QueryValues[z].Ptr = QueryValues[z].Default;
 				}
 			}
